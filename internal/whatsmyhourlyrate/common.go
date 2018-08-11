@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"whatsmyhourlyrate/app/actions"
+	"whatsmyhourlyrate/actions"
 
 	"go.uber.org/zap"
 )
