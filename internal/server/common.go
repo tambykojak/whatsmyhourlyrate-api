@@ -1,28 +1,29 @@
-package app
+package server
 
 import (
 	"fmt"
 	"log"
 	"net/http"
-	"whatsmyhourlyrate/actions"
+
+	"github.com/tambykojak/whatsmyhourlyrate-api/internal/server/actions"
 
 	"go.uber.org/zap"
 )
 
-// App TODO
-type App struct {
+// Server TODO
+type Server struct {
 	Port   int
 	logger *zap.SugaredLogger
 }
 
 // Initialize TODO
-func (a *App) Initialize() {
-	a.initializeLogger()
-	a.setupRoutes()
-	a.startListening()
+func (s *Server) Initialize() {
+	s.initializeLogger()
+	s.setupRoutes()
+	s.startListening()
 }
 
-func (a *App) initializeLogger() {
+func (s *Server) initializeLogger() {
 	logger, err := zap.NewProduction()
 
 	if err != nil {
@@ -30,10 +31,10 @@ func (a *App) initializeLogger() {
 	}
 
 	logger.Info("Logger has successfully been setup.")
-	a.logger = logger.Sugar()
+	s.logger = logger.Sugar()
 }
 
-func (a *App) setupRoutes() {
+func (s *Server) setupRoutes() {
 	type route struct {
 		path    string
 		handler http.HandlerFunc
@@ -44,19 +45,19 @@ func (a *App) setupRoutes() {
 		{path: "/hourly_rate", handler: actions.HandleGetHourlyRate}}
 
 	for _, route := range routes {
-		http.HandleFunc(route.path, a.middleware(route.handler))
+		http.HandleFunc(route.path, s.middleware(route.handler))
 	}
 }
 
-func (a *App) middleware(f http.HandlerFunc) http.HandlerFunc {
+func (s *Server) middleware(f http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		f(w, r)
 	}
 }
 
-func (a *App) startListening() {
-	port := fmt.Sprintf(":%d", a.Port)
-	a.logger.Infof("Server starting on port %d.", a.Port)
+func (s *Server) startListening() {
+	port := fmt.Sprintf(":%d", s.Port)
+	s.logger.Infof("Server starting on port %d.", s.Port)
 	http.ListenAndServe(port, nil)
 }

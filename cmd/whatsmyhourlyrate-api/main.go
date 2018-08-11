@@ -4,12 +4,12 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/tambykojak/whatsmyhourlyrate-api/internal/whatsmyhourlyrate"
+	"github.com/tambykojak/whatsmyhourlyrate-api/internal/server"
 )
 
 func main() {
-	app := whatsmyhourlyrate.App{Port: getPort()}
-	app.Initialize()
+	server := server.Server{Port: getPort()}
+	server.Initialize()
 }
 
 func getPort() int {
