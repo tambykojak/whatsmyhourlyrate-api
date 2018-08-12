@@ -5,9 +5,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/tambykojak/whatsmyhourlyrate-api/internal/server/actions"
-
 	"go.uber.org/zap"
+
+	"github.com/tambykojak/whatsmyhourlyrate-api/server/actions"
 )
 
 // Server TODO
