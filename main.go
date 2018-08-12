@@ -4,7 +4,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/tambykojak/whatsmyhourlyrate-api/internal/server"
+	"github.com/tambykojak/whatsmyhourlyrate-api/server"
 )
 
 func main() {
